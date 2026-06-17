@@ -159,7 +159,6 @@ ScreenManager:
             elevation: 4
             padding: "20dp"
             md_bg_color: 0.15, 0.35, 0.25, 1
-            radius: [15]
             ScrollView:
                 MDLabel:
                     id: contenido_tabla
@@ -364,7 +363,7 @@ class TrofeosScreen(Screen):
             color_fondo = (0.95, 0.85, 0.4, 1) if desbloqueado else (0.8, 0.8, 0.8, 1)
             from kivymd.uix.card import MDCard
             from kivymd.uix.label import MDLabel
-            tarjeta = MDCard(orientation='vertical', padding="10dp", size_hint_y=None, height="110dp", md_bg_color=color_fondo, radius=[12])
+            tarjeta = MDCard(orientation='vertical', padding="10dp", size_hint_y=None, height="110dp", md_bg_color=color_fondo)
             lbl = MDLabel(text=texto, halign="center", bold=True, theme_text_color="Custom", text_color=(0.3, 0.2, 0.1, 1) if desbloqueado else (0.5, 0.5, 0.5, 1))
             tarjeta.add_widget(lbl)
             self.ids.contenedor_trofeos.add_widget(tarjeta)
