@@ -1,0 +1,45 @@
+```yaml
+name: Compilar APK Multipepes
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configurar Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Instalar Dependencias de Linux
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ccache auto-apt-get build-essential libltdl-dev libffi-dev libssl-dev autoconf libtool pkg-config zlib1g-dev
+
+    - name: Instalar Buildozer y Cython
+      run: |
+        pip install --upgrade pip
+        pip install "cython<3.0.0" buildozer python-for-android
+
+    - name: Construir APK de Multipepes
+      run: |
+        buildozer android debug
+
+    - name: Subir el archivo APK resultante
+      uses: actions/upload-artifact@v4
+      with:
+        name: Multipepes-APK-Instalable
+        path: bin/*.apk
