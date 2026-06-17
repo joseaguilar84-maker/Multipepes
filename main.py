@@ -9,7 +9,6 @@ from kivy.utils import get_color_from_hex
 
 Window.size = (450, 750)
 
-# Diseño Visual Adaptable y Vibrante en Kivy Puro
 KV = '''
 ScreenManager:
     MenuScreen:
@@ -29,7 +28,7 @@ ScreenManager:
     
     BoxLayout:
         orientation: 'vertical'
-        padding: [20, 50, 20, 50]
+        padding: 20
         spacing: 20
         
         Label:
@@ -38,7 +37,6 @@ ScreenManager:
             bold: True
             color: get_color_from_hex('#7E37A6')
             size_hint_y: 0.15
-            halign: 'center'
 
         Label:
             id: estrellas_menu
@@ -47,13 +45,11 @@ ScreenManager:
             bold: True
             color: get_color_from_hex('#E59B00')
             size_hint_y: 0.10
-            halign: 'center'
 
         Label:
             text: "🦄   ✏️   🎈   🧸"
             font_size: '50sp'
             size_hint_y: 0.25
-            halign: 'center'
 
         Button:
             text: "¡Aprender las Tablas! 📚"
@@ -61,7 +57,7 @@ ScreenManager:
             bold: True
             background_normal: ''
             background_color: get_color_from_hex('#33B249')
-            size_hint: (1, 0.13)
+            size_hint_y: 0.13
             on_release: root.manager.current = 'tablas'
 
         Button:
@@ -70,7 +66,7 @@ ScreenManager:
             bold: True
             background_normal: ''
             background_color: get_color_from_hex('#E64C80')
-            size_hint: (1, 0.13)
+            size_hint_y: 0.13
             on_release: root.manager.get_screen('juego').iniciar_juego(); root.manager.current = 'juego'
 
         Button:
@@ -79,7 +75,7 @@ ScreenManager:
             bold: True
             background_normal: ''
             background_color: get_color_from_hex('#E5B21A')
-            size_hint: (1, 0.13)
+            size_hint_y: 0.13
             on_release: root.manager.get_screen('trofeos').actualizar_pantalla(); root.manager.current = 'trofeos'
 
 <TablasScreen>:
@@ -180,10 +176,10 @@ ScreenManager:
                 on_release: root.ir_a_tabla(10)
 
         Button:
-            text: " Volver al Menú"
+            text: "Volver al Menú"
             font_size: '18sp'
             bold: True
-            size_hint: (0.4, 0.1)
+            size_hint: (0.5, 0.1)
             pos_hint: {'center_x': 0.5}
             on_release: root.manager.current = 'menu'
 '''
@@ -375,7 +371,7 @@ class EstudioScreen(Screen):
         self.ids.titulo_tabla.text = f"Tabla del {numero} ✨"
         texto_tabla = ""
         for i in range(1, 11):
-            texto_tabla += f"{numero}  x  {i}   =   {numero * i}\n\n"
+            texto_tabla += f"{numero}  x  {i}   =   {numero * i}\\n\\n"
         self.ids.contenido_tabla.text = texto_tabla
 
 class JuegoScreen(Screen):
@@ -448,7 +444,6 @@ class TrofeosScreen(Screen):
             desbloqueado = app.datos['trofeos'][str(i)]
             texto = f"🏆 Tabla del {i}\\n¡Dominada!" if desbloqueado else f"🔒 Tabla del {i}\\n(5 aciertos)"
             color_txt = get_color_from_hex('#805500') if desbloqueado else get_color_from_hex('#777777')
-            bg_color = get_color_from_hex('#FFEAA7') if desbloqueado else get_color_from_hex('#DFDFDF')
             
             lbl = Label(
                 text=texto,
@@ -456,14 +451,7 @@ class TrofeosScreen(Screen):
                 bold=True,
                 color=color_txt,
                 size_hint_y=None,
-                height=100,
-                canvas_before_code='''
-                    Color:
-                        rgba: %s
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                ''' % str(list(bg_color))
+                height=100
             )
             self.ids.contenedor_trofeos.add_widget(lbl)
 
